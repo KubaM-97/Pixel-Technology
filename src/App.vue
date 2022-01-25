@@ -1,12 +1,15 @@
 <template>
-  <p>Hello World</p>
+  <PatientsView />
 </template>
 
 <script>
 
+import PatientsView from '@/components/PatientsView';
+
 export default {
   name: 'App',
   components: {
+    PatientsView,
   }
 }
 </script>
