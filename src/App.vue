@@ -26,9 +26,12 @@ export default {
   filter: blur(.2px);
   font-family: 'Mukta', sans-serif;
 }
+body{
+  background: url('./assets/images/background.png');
+  height: 100vh;
+}
 #app {
   display: flex;
   justify-content: center;
-  background: url('./assets/images/background.png')
 }
 </style>

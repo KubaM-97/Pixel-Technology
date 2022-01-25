@@ -1,24 +1,24 @@
 <template>
   <table>
-      <thead>
-          <tr>
-              <td>L.P</td>
-              <td>Imię i Nazwisko</td>
-              <td>Leki</td>
-          </tr>
-      </thead>
-      <tbody>
-          <tr v-for="(patient, index) in patients" :key="patient.id">
-                <td>{{index + 1}}.</td>
-                <td>{{patient.name}} {{patient.lastName}}</td>
-                <td>
-                    <ul>
-                        <template v-for="medicine in medicines" :key="medicine.id">
-                            <li v-if="medicine.patientIds.includes(patient.id)">{{ medicine.medicationName }}</li>
-                        </template>
-                    </ul>
-                </td>
-          </tr>
+    <thead>
+      <tr>
+        <td>L.P</td>
+        <td>Imię i Nazwisko</td>
+        <td>Leki</td>
+      </tr>
+    </thead>
+    <tbody v-if="!isLoading">
+        <tr v-for="(patient, index) in patients" :key="patient.id">
+            <td>{{index + 1}}.</td>
+            <td>{{patient.name}} {{patient.lastName}}</td>
+            <td>
+                <ul>
+                    <template v-for="medicine in medicines" :key="medicine.id">
+                        <li v-if="medicine.patientIds.includes(patient.id)">{{ medicine.medicationName }}</li>
+                    </template>
+                </ul>
+            </td>
+        </tr>
       </tbody>
   </table>
 </template>
@@ -28,18 +28,23 @@
 export default {
   name: 'PatientsTable',
   props: {
-      patients: {
-          type: Array,
-          required: false,
-          default: () => []
-      },
-      medicines: {
-          type: Array,
-          required: false,
-          default: () => []
-      }
-  }
-}
+    patients: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
+    medicines: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
+    isLoading: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -65,6 +70,9 @@ tbody tr:nth-child(odd){
 }
 tbody tr:nth-child(even){
     background: #2b7bec;
+}
+tbody tr {
+    transition: all .2s linear;
 }
 tbody tr:hover {
     background: rgb(2, 49, 179);
