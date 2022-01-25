@@ -9,9 +9,15 @@
       </thead>
       <tbody>
           <tr v-for="(patient, index) in patients" :key="patient.id">
-              <td>{{index + 1}}.</td>
-              <td>{{patient.name}} {{patient.lastName}}</td>
-              <td>Lek xxx:</td>
+                <td>{{index + 1}}.</td>
+                <td>{{patient.name}} {{patient.lastName}}</td>
+                <td>
+                    <ul>
+                        <template v-for="medicine in medicines" :key="medicine.id">
+                            <li v-if="medicine.patientIds.includes(patient.id)">{{ medicine.medicationName }}</li>
+                        </template>
+                    </ul>
+                </td>
           </tr>
       </tbody>
   </table>
@@ -23,6 +29,11 @@ export default {
   name: 'PatientsTable',
   props: {
       patients: {
+          type: Array,
+          required: false,
+          default: () => []
+      },
+      medicines: {
           type: Array,
           required: false,
           default: () => []
@@ -60,5 +71,8 @@ td {
 }
 td:first-child {
     width: 10%;
+}
+ul {
+    text-align: left;
 }
 </style>

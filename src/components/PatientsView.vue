@@ -1,5 +1,5 @@
 <template>
-  <PatientsTable :patients="patients" />
+  <PatientsTable :patients="patients" :medicines="medicines" />
 </template>
 
 <script>
@@ -18,10 +18,14 @@ export default {
   setup(){
       
       const patients = ref([]);
+      const medicines = ref([]);
       
       axios.get('https://cerber.pixel.com.pl/api/patients').then(res => patients.value = res.data)
+      axios.get('https://cerber.pixel.com.pl/api/medicine').then(res => medicines.value = res.data)
+
       return {
-          patients
+          patients,
+          medicines
       }
   }
 }
