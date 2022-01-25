@@ -27,5 +27,6 @@ export default {
 #app {
   display: flex;
   justify-content: center;
+  background: url('./assets/images/background.png')
 }
 </style>
