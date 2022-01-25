@@ -15,6 +15,7 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Mukta&display=swap');
 *{
   margin: 0;
   padding: 0;
@@ -22,7 +23,8 @@ export default {
   font-size: 1.2rem;
   text-align: center;
   text-shadow: .5px 0px 2px rgb(6, 91, 117), -.5px 0px 2px rgb(6, 91, 117), 0px .5px 2px rgb(6, 91, 117), 0px -.5px 2px rgb(6, 91, 117);
-  filter: blur(.2px)
+  filter: blur(.2px);
+  font-family: 'Mukta', sans-serif;
 }
 #app {
   display: flex;

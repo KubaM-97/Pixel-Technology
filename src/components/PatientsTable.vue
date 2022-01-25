@@ -64,7 +64,11 @@ tbody tr:nth-child(odd){
     background: #418efa;
 }
 tbody tr:nth-child(even){
-    background: #246cd1;
+    background: #2b7bec;
+}
+tbody tr:hover {
+    background: rgb(2, 49, 179);
+    cursor: pointer;
 }
 td {
     padding: 10px 20px;
@@ -72,7 +76,14 @@ td {
 td:first-child {
     width: 10%;
 }
+td:nth-child(2) {
+    width: 50%;
+}
 ul {
+    list-style-type: none;
+}
+li {
+    font-size: 1rem;
     text-align: left;
 }
 </style>
