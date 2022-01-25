@@ -19,7 +19,7 @@ export default {
       
       const patients = ref([]);
       
-      axios.get('https://cerber.pixel.com.pl/api/patients').then(res => patients.value = res)
+      axios.get('https://cerber.pixel.com.pl/api/patients').then(res => patients.value = res.data)
       return {
           patients
       }
