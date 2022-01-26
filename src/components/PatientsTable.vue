@@ -1,4 +1,10 @@
 <template>
+ <router-view v-slot="{ Component }">
+    <transition name="router" mode="out-in">
+      <component :is="Component" />
+    </transition>
+  </router-view>
+  
   <table>
     <thead>
       <tr>
@@ -11,17 +17,27 @@
       <tr v-if="isLoading">
         <td colspan="3"><Loader /></td>
       </tr>
-        <tr v-else v-for="(patient, index) in patients" :key="patient.id">
-            <td>{{index + 1}}.</td>
-            <td>{{patient.name}} {{patient.lastName}}</td>
-            <td>
-                <ul>
-                    <template v-for="medicine in medicines" :key="medicine.id">
-                        <li v-if="medicine.patientIds.includes(patient.id)">{{ medicine.medicationName }}</li>
-                    </template>
-                </ul>
-            </td>
-        </tr>
+          <router-link  v-else v-for="(patient, index) in patients" :key="patient.id"
+            custom
+            v-slot="{ navigate }"
+            :to="{
+              name: 'SinglePatientView',
+              params: {
+                id: patient.id,
+              },
+            }">
+            <tr @click="navigate" @keypress.enter="navigate" role="link">
+              <td>{{index + 1}}.</td>
+              <td>{{patient.name}} {{patient.lastName}}</td>
+              <td>
+                  <ul>
+                      <template v-for="medicine in medicines" :key="medicine.id">
+                          <li v-if="medicine.patientIds.includes(patient.id)">{{ medicine.medicationName }}</li>
+                      </template>
+                  </ul>
+              </td>
+            </tr>
+          </router-link>
       </tbody>
   </table>
 </template>
