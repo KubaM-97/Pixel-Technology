@@ -11,13 +11,15 @@
       <tr v-if="isLoading">
         <td colspan="3"><Loader /></td>
       </tr>
-          <router-link  v-else v-for="(patient, index) in patients" :key="patient.id"
+          <router-link v-else v-for="(patient, index) in patients" :key="patient.id"
             custom
             v-slot="{ navigate }"
             :to="{
               name: 'SinglePatientView',
               params: {
                 id: patient.id,
+                patient: JSON.stringify(patient),
+                medicines: JSON.stringify(getAllPatientMedicines(patient))
               },
             }">
             <tr @click="navigate" @keypress.enter="navigate" role="link">
@@ -25,8 +27,8 @@
               <td>{{patient.name}} {{patient.lastName}}</td>
               <td>
                   <ul>
-                      <template v-for="medicine in medicines" :key="medicine.id">
-                          <li v-if="medicine.patientIds.includes(patient.id)">{{ medicine.medicationName }}</li>
+                      <template v-for="medicine in getAllPatientMedicines(patient)" :key="medicine.id">
+                          <li>{{ medicine.medicationName }}</li>
                       </template>
                   </ul>
               </td>
@@ -39,6 +41,7 @@
 <script>
 
 import Loader from '@/components/Loader'
+import { toRefs } from 'vue'
 
 export default {
   name: 'PatientsTable',
@@ -61,6 +64,19 @@ export default {
   },
   components: {
     Loader,
+  },
+  setup(props) {
+    
+    const { medicines } = toRefs(props);
+
+    function getAllPatientMedicines(patient) {
+      return medicines.value.filter(medicine => medicine.patientIds.includes(patient.id))
+    }
+
+    return {
+      getAllPatientMedicines,
+    }
+
   },
 };
 </script>
