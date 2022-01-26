@@ -7,8 +7,11 @@
         <td>Leki</td>
       </tr>
     </thead>
-    <tbody v-if="!isLoading">
-        <tr v-for="(patient, index) in patients" :key="patient.id">
+    <tbody>
+      <tr v-if="isLoading">
+        <td colspan="3"><Loader /></td>
+      </tr>
+        <tr v-else v-for="(patient, index) in patients" :key="patient.id">
             <td>{{index + 1}}.</td>
             <td>{{patient.name}} {{patient.lastName}}</td>
             <td>
@@ -24,6 +27,8 @@
 </template>
 
 <script>
+
+import Loader from '@/components/Loader'
 
 export default {
   name: 'PatientsTable',
@@ -43,6 +48,9 @@ export default {
       required: false,
       default: false,
     },
+  },
+  components: {
+    Loader,
   },
 };
 </script>
