@@ -1,5 +1,7 @@
 <template>
+<div> 
   Hello Single Patient View - {{route.params.id}}
+</div>
 </template>
 
 <script>
