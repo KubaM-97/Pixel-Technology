@@ -12,7 +12,7 @@
         </div>
         <div class='personalData'>
           <span class='patientName'>
-            <span class='personalDataLabel'>imię i nazwisko:</span>
+            <span class='personalDataLabel'>imię i nazwisko: </span>
             <span class='personalDataValue'>{{patient.name}} {{patient.lastName}}</span>
           </span>
           <span class='patientAge'>wiek: {{patient.age}}</span>
@@ -130,6 +130,11 @@ export default {
   background: linear-gradient(311deg, rgba(2,0,36,1) 0%, rgba(111,111,204,1) 17%, rgba(0,212,255,1) 100%);
   border: 4px solid rgb(3, 207, 3);
   border-radius: 20px;
+  width: 60%;
+}
+.card{
+  width: 90%;
+  margin: auto;
 }
 .loader {
   width: 400px;
@@ -140,13 +145,14 @@ export default {
   justify-content: space-evenly;
   align-items: center;
 }
+.patientAvatar{
+  width: 180px;
+  height: 180px;
+}
 .patientAvatar img {
   display: flex;
   align-self: center;
-}
-.patientAvatar img {
-  width: 180px;
-  height: 180px;
+  width: 100%;
   border: 7px solid black;
   border-radius: 20px;
 }
@@ -169,28 +175,69 @@ export default {
   justify-content: space-between;
 }
 .medicineName {
-  font-size: .75rem;
+  font-size: 1rem;
 }
 .medicineExpDate {
   margin-left: 30px;
-  font-size: .7rem;
+  font-size: 1rem;
 }
 .medicineStrength {
   display: flex;
   justify-content: space-between;
-  font-size: .7rem;
+  font-size: .9rem;
 }
 .rating {
   filter: grayscale(100%);
   display: inline-flex;
   flex-wrap: nowrap;
+  width: 50px;
+  height: 30px;
 }
 .rating-active {
   color: white;
   filter: grayscale(0%)
 }
 .rating img{
-  width: 40px;
-  height: 20px;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .container {
+    margin-top: 30px;
+    width: 100%;
+  }
+  .card {
+    width: 100%;
+  }
+  .patient {
+    flex-wrap: wrap;
+  }
+  .patientAvatar {
+    margin-bottom: 10px;
+  }
+  .personalData {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .personalData > span {
+    display: flex;
+    width: 100%;
+  }
+  .personalData span {
+    font-size: .8rem;
+  }
+  .medicineName {
+    font-size: .7rem;
+  }
+  .medicineExpDate {
+    font-size: .7rem;
+  }
+  .medicineStrength {
+    font-size: .7rem;
+  }
+  .rating {
+    width: 31px;
+    height: 20px;
+  }
 }
 </style>

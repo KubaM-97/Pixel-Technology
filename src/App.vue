@@ -30,5 +30,16 @@ body{
 #app {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 100px;
+  margin: auto;
+  width: 65%;
+  max-width: 1400px;
+}
+@media (max-width: 1199px) {
+  #app {
+    padding-top: 30px;
+    width: 100%;
+  }
 }
 </style>
