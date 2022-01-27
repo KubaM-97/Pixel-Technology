@@ -1,7 +1,9 @@
 <template>
-    Filtry: 
-    <FiltersOver30 />
-    <FiltersUnder63 />
+    <div class='filtersPanel'> 
+        <span class='filtersLabel'>Filtry: </span> 
+        <FiltersOver30 />
+        <FiltersUnder63 />
+    </div>
 </template>
 
 <script>
@@ -19,5 +21,10 @@ export default {
 </script>
 
 <style>
+.filtersPanel {
 
+}
+.filtersLabel {
+
+}
 </style>

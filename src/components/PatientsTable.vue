@@ -59,7 +59,7 @@ export default {
   setup() {
     
     const store = useStore();
-    const patients = computed(()=>store.state.patients);
+    const patients = computed(()=>store.getters.filteredPatients());
     const medicines = computed(()=>store.state.medicines);
 
     function getAllPatientMedicines(patient) {
