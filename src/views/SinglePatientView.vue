@@ -1,6 +1,10 @@
 <template>
-  <div class='card'>
-    <div class='patient'>
+  <div class='container'>
+    <div class='loader'  v-if='isLoading'>
+      <Loader/>
+    </div>
+  <div class='card' v-else>
+    <div class='patient' v-if="patient">
       <div class='patientAvatar'>
         <img :src="getImgSrc()" :alt='`${patient.gender}avatar`' />        
       </div>
@@ -15,7 +19,7 @@
         <span class='patientAdress'>{{patient.adress}}</span>
       </div>
     </div>
-    <div class='medicines'>
+    <div class='medicines' v-if="medicines">
       <div class='medicineData' v-for="medicine in medicines" :key="medicine.id">
         <p class='medicineLabel'>
           <span class='medicineName'> {{medicine.medicationName}} </span>
@@ -29,33 +33,85 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
+import { computed, ref, } from 'vue';
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex';
+import Loader from '../components/Loader.vue';
 export default {
     name: 'SinglePatientView',
+    components: {
+      Loader,
+    },
     setup(){
+
       const route = useRoute();
-      const patient = JSON.parse(route.params.patient);
-      const medicines = JSON.parse(route.params.medicines);
+      const store = useStore();
+
+      const allPatients = computed(()=>store.state.patients)
+      const allMedicines = computed(()=>store.state.medicines)
+      
+      const patient = ref({});
+      const patientMedicines = ref({})
+
+      const isLoading = ref(false)
+
+      if (!route?.params?.patient) {
+        fetchData()
+      } 
+      else {
+        patient.value = JSON.parse(route?.params?.patient)
+        patientMedicines.value = JSON.parse(route?.params?.medicines)
+      }
+
+      async function fetchData() {
+        await fetchPatients();
+        await fetchMedicines();
+        patient.value = allPatients.value.find( patient => patient.id === route.params.id)
+        patientMedicines.value = allMedicines.value.filter( medicine => medicine.patientIds.includes(patient.value.id))
+      }
+
+      async function fetchPatients() {
+        try {
+          isLoading.value = true;
+          await store.dispatch('fetchPatients')
+        } catch (err) {
+          console.error(err);
+        } finally {
+          isLoading.value = false;
+        }
+      }
+
+      async function fetchMedicines() {
+        try {
+          isLoading.value = true;
+          await store.dispatch('fetchMedicines')
+        } catch (err) {
+          console.error(err);
+        } finally {
+          isLoading.value = false;
+        }
+      }
 
       function defineGender(gender) {
         return gender === 'male' ? 'mężczyzna' : 'kobieta';
       }
 
       function getImgSrc() {
-        return require(`../assets/images/${patient.gender}Avatar.png`);
+        return patient.value.gender ? require(`../assets/images/${patient.value.gender}Avatar.png`) : null;
       }
 
       function checkRating(strength, n) {
         return strength - n >= 0;
       }
-
+      
       return {
-        route,
         patient,
-        medicines,
+        medicines: patientMedicines,
+        isLoading,
         defineGender,
         getImgSrc,
         checkRating,
@@ -65,12 +121,16 @@ export default {
 </script>
 
 <style scoped>
-.card {
+.container {
   margin-top: 100px;
   padding: 20px;
   background: linear-gradient(311deg, rgba(2,0,36,1) 0%, rgba(111,111,204,1) 17%, rgba(0,212,255,1) 100%);
   border: 4px solid rgb(3, 207, 3);
   border-radius: 20px;
+}
+.loader {
+  width: 400px;
+  height: 300px;
 }
 .patient {
   display: flex;
