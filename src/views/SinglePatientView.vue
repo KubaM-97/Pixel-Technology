@@ -1,38 +1,41 @@
 <template>
   <div class='container'>
-    <div class='loader'  v-if='isLoading'>
+
+    <div class='loader' v-if='isLoading'>
       <Loader/>
     </div>
-  <div class='card' v-else>
-    <div class='patient' v-if="patient">
-      <div class='patientAvatar'>
-        <img :src="getImgSrc()" :alt='`${patient.gender}avatar`' />        
+
+    <div class='card' v-else>
+      <div class='patient' v-if="patient">
+        <div class='patientAvatar'>
+          <img :src="getImgSrc()" :alt='`${patient.gender}avatar`' />        
+        </div>
+        <div class='personalData'>
+          <span class='patientName'>
+            <span class='personalDataLabel'>imię i nazwisko:</span>
+            <span class='personalDataValue'>{{patient.name}} {{patient.lastName}}</span>
+          </span>
+          <span class='patientAge'>wiek: {{patient.age}}</span>
+          <span class='patientGender'>płeć: {{translateGender(patient.gender)}}</span>
+          <span class='patientPhoneNumber'>telefon: {{patient.phoneNumber}}</span>
+          <span class='patientAdress'>{{patient.adress}}</span>
+        </div>
       </div>
-      <div class='personalData'>
-        <span class='patientName'>
-          <span class='personalDataLabel'>imię i nazwisko:</span>
-          <span class='personalDataValue'>{{patient.name}} {{patient.lastName}}</span>
-        </span>
-        <span class='patientAge'>wiek: {{patient.age}}</span>
-        <span class='patientGender'>płeć: {{defineGender(patient.gender)}}</span>
-        <span class='patientPhoneNumber'>telefon: {{patient.phoneNumber}}</span>
-        <span class='patientAdress'>{{patient.adress}}</span>
-      </div>
-    </div>
-    <div class='medicines' v-if="medicines">
-      <div class='medicineData' v-for="medicine in medicines" :key="medicine.id">
-        <p class='medicineLabel'>
-          <span class='medicineName'> {{medicine.medicationName}} </span>
-          <span class='medicineExpDate'> - data ważności {{medicine.expDate}} </span>
-        </p>
-        <div class="medicineStrength">Siła leku:
-          <div v-for="n in 10" :key="n" class="rating" :class="{'rating-active': checkRating(medicine.strength, n)}"> 
-            <img src="../assets/images/capsule.png" alt="capsule" />
+      <div class='medicines' v-if="medicines">
+        <div class='medicineData' v-for="medicine in medicines" :key="medicine.id">
+          <p class='medicineLabel'>
+            <span class='medicineName'> {{medicine.medicationName}} </span>
+            <span class='medicineExpDate'> - data ważności {{medicine.expDate}} </span>
+          </p>
+          <div class="medicineStrength">Siła leku:
+            <div v-for="n in 10" :key="n" class="rating" :class="{'rating-active': checkRating(medicine.strength, n)}"> 
+              <img src="../assets/images/capsule.png" alt="capsule" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+
   </div>
 </template>
 
@@ -96,7 +99,7 @@ export default {
         }
       }
 
-      function defineGender(gender) {
+      function translateGender(gender) {
         return gender === 'male' ? 'mężczyzna' : 'kobieta';
       }
 
@@ -112,7 +115,7 @@ export default {
         patient,
         medicines: patientMedicines,
         isLoading,
-        defineGender,
+        translateGender,
         getImgSrc,
         checkRating,
       }
