@@ -1,35 +1,64 @@
 <template>
-  <div class='patientView'>
-    <FiltersPanel />
-    <PatientsTable :isLoading="isLoading" />
-  </div>
+  <PatientsTable :patients="patients" :medicines="medicines" :isLoading="isLoading" />
 </template>
 
 <script>
 
-import FiltersPanel from '@/components/filters/FiltersPanel';
 import PatientsTable from '@/components/PatientsTable';
-import fetchingDataMixin from "@/components/mixins/fetchingDataMixin.js"
 
-import { onMounted, ref } from 'vue';
+import { ref, onMounted } from 'vue';
+
+import axios from 'axios'
 
 export default {
   name: 'PatientsView',
   components: {
-    FiltersPanel,
     PatientsTable,
   },
   setup() {
+    const patients = ref([]);
+    const medicines = ref([]);
 
     const isLoading = ref(false);
-      
+
     onMounted(async () => {
-      isLoading.value = true
-      await fetchingDataMixin().fetchData();
-      isLoading.value = false
+      await fetchData();
     });
 
+    async function fetchData() {
+      await fetchPatients();
+      await fetchMedicines();
+    }
+
+    async function fetchPatients() {
+      try {
+        isLoading.value = true;
+        await axios
+          .get("https://cerber.pixel.com.pl/api/patients")
+          .then((res) => (patients.value = res.data));
+      } catch (err) {
+        console.error(err);
+      } finally {
+        isLoading.value = false;
+      }
+    }
+
+    async function fetchMedicines() {
+      try {
+        isLoading.value = true;
+        await axios
+          .get("https://cerber.pixel.com.pl/api/medicine")
+          .then((res) => (medicines.value = res.data));
+      } catch (err) {
+        console.error(err);
+      } finally {
+        isLoading.value = false;
+      }
+    }
+
     return {
+      patients,
+      medicines,
       isLoading,
     };
   },
@@ -41,9 +70,7 @@ export default {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  padding-top: 100px;
-  margin: auto;
-  width: 65%;
+  width: 100%;
   max-width: 1400px;
 }
 @media (max-width: 768px){
