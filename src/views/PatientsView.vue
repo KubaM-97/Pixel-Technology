@@ -7,9 +7,9 @@
 
 import FiltersPanel from '@/components/filters/FiltersPanel';
 import PatientsTable from '@/components/PatientsTable';
+import fetchingDataMixin from "@/components/mixins/fetchingDataMixin.js"
 
-import { ref, onMounted } from 'vue';
-import { useStore } from 'vuex';
+import { onMounted, ref } from 'vue';
 
 export default {
   name: 'PatientsView',
@@ -19,39 +19,13 @@ export default {
   },
   setup() {
 
-    const store = useStore()
     const isLoading = ref(false);
-
+      
     onMounted(async () => {
-      await fetchData();
+      isLoading.value = true
+      await fetchingDataMixin().fetchData();
+      isLoading.value = false
     });
-
-    async function fetchData() {
-      await fetchPatients();
-      await fetchMedicines();
-    }
-
-    async function fetchPatients() {
-      try {
-        isLoading.value = true;
-        await store.dispatch('fetchPatients')
-      } catch (err) {
-        console.error(err);
-      } finally {
-        isLoading.value = false;
-      }
-    }
-
-    async function fetchMedicines() {
-      try {
-        isLoading.value = true;
-        await store.dispatch('fetchMedicines')
-      } catch (err) {
-        console.error(err);
-      } finally {
-        isLoading.value = false;
-      }
-    }
 
     return {
       isLoading,
