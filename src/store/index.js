@@ -34,7 +34,7 @@ export default createStore({
       state.patients = patients
     },
     setMedicines(state, medicines){
-      state.medicines = medicines
+      state.medicines = medicines.sort((a,b) => (a.strength < b.strength) ? 1 : -1 )
     },
     setMinPatientAge(state, minPatientAge){
       state.minPatientAge = minPatientAge
