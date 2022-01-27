@@ -1,6 +1,8 @@
 <template>
-  <label for='filterPatientAge63'> Filters Under 63 </label>
-  <input id='filterPatientAge63' type='checkbox' v-model="toggleMaxAge" :true-value="63" :false-value="null" />
+  <div class='filterOption'>
+    <label for='filterPatientAge63'> Pacjenci poniżej 63 r.ż zażywający silne leki </label>
+    <input id='filterPatientAge63' type='checkbox' v-model="toggleMaxAge" :true-value="63" :false-value="null" />
+  </div>
 </template>
 
 <script>
@@ -23,6 +25,17 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.filterOption{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  margin: 15px auto;
+}
+@media (max-width: 768px){
+  .filterOption{
+    width: 80%;
+  }
+}
 </style>

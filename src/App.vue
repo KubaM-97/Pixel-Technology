@@ -28,7 +28,5 @@ body{
   height: 100vh;
 }
 #app {
-  display: flex;
-  justify-content: center;
 }
 </style>

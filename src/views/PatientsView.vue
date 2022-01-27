@@ -1,6 +1,8 @@
 <template>
-  <FiltersPanel />
-  <PatientsTable :isLoading="isLoading" />
+  <div class='patientView'>
+    <FiltersPanel />
+    <PatientsTable :isLoading="isLoading" />
+  </div>
 </template>
 
 <script>
@@ -33,3 +35,21 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.patientView {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 100px;
+  margin: auto;
+  width: 65%;
+  max-width: 1400px;
+}
+@media (max-width: 768px){
+  .patientView {
+    padding-top: 60px;
+    width: 100%
+  }
+}
+</style>
