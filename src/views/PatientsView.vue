@@ -1,9 +1,11 @@
 <template>
+  <FiltersPanel />
   <PatientsTable :patients="patients" :medicines="medicines" :isLoading="isLoading" />
 </template>
 
 <script>
 
+import FiltersPanel from '@/components/filters/FiltersPanel';
 import PatientsTable from '@/components/PatientsTable';
 
 import { ref, onMounted } from 'vue';
@@ -13,6 +15,7 @@ import axios from 'axios'
 export default {
   name: 'PatientsView',
   components: {
+    FiltersPanel,
     PatientsTable,
   },
   setup() {
