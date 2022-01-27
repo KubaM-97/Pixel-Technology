@@ -41,21 +41,12 @@
 <script>
 
 import Loader from '@/components/Loader'
-import { toRefs } from 'vue'
+import { computed } from 'vue'
+import { useStore } from 'vuex';
 
 export default {
   name: 'PatientsTable',
   props: {
-    patients: {
-      type: Array,
-      required: false,
-      default: () => [],
-    },
-    medicines: {
-      type: Array,
-      required: false,
-      default: () => [],
-    },
     isLoading: {
       type: Boolean,
       required: false,
@@ -65,15 +56,19 @@ export default {
   components: {
     Loader,
   },
-  setup(props) {
+  setup() {
     
-    const { medicines } = toRefs(props);
+    const store = useStore();
+    const patients = computed(()=>store.state.patients);
+    const medicines = computed(()=>store.state.medicines);
 
     function getAllPatientMedicines(patient) {
       return medicines.value.filter(medicine => medicine.patientIds.includes(patient.id))
     }
 
     return {
+      patients,
+      medicines,
       getAllPatientMedicines,
     }
 

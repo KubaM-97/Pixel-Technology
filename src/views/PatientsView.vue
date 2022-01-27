@@ -1,6 +1,6 @@
 <template>
   <FiltersPanel />
-  <PatientsTable :patients="patients" :medicines="medicines" :isLoading="isLoading" />
+  <PatientsTable :isLoading="isLoading" />
 </template>
 
 <script>
@@ -9,8 +9,7 @@ import FiltersPanel from '@/components/filters/FiltersPanel';
 import PatientsTable from '@/components/PatientsTable';
 
 import { ref, onMounted } from 'vue';
-
-import axios from 'axios'
+import { useStore } from 'vuex';
 
 export default {
   name: 'PatientsView',
@@ -19,9 +18,8 @@ export default {
     PatientsTable,
   },
   setup() {
-    const patients = ref([]);
-    const medicines = ref([]);
 
+    const store = useStore()
     const isLoading = ref(false);
 
     onMounted(async () => {
@@ -36,9 +34,7 @@ export default {
     async function fetchPatients() {
       try {
         isLoading.value = true;
-        await axios
-          .get("https://cerber.pixel.com.pl/api/patients")
-          .then((res) => (patients.value = res.data));
+        await store.dispatch('fetchPatients')
       } catch (err) {
         console.error(err);
       } finally {
@@ -49,9 +45,7 @@ export default {
     async function fetchMedicines() {
       try {
         isLoading.value = true;
-        await axios
-          .get("https://cerber.pixel.com.pl/api/medicine")
-          .then((res) => (medicines.value = res.data));
+        await store.dispatch('fetchMedicines')
       } catch (err) {
         console.error(err);
       } finally {
@@ -60,8 +54,6 @@ export default {
     }
 
     return {
-      patients,
-      medicines,
       isLoading,
     };
   },
