@@ -8,33 +8,33 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-if="isLoading">
+      <tr v-if="isLoading" class='loader'>
         <td colspan="3"><Loader /></td>
       </tr>
-          <router-link v-else v-for="(patient, index) in patients" :key="patient.id"
-            custom
-            v-slot="{ navigate }"
-            :to="{
-              name: 'SinglePatientView',
-              params: {
-                id: patient.id,
-                patient: JSON.stringify(patient),
-                medicines: JSON.stringify(getAllPatientMedicines(patient))
-              },
-            }">
-            <tr @click="navigate" @keypress.enter="navigate" role="link">
-              <td>{{index + 1}}.</td>
-              <td>{{patient.name}} {{patient.lastName}}</td>
-              <td>
-                  <ul>
-                      <template v-for="medicine in getAllPatientMedicines(patient)" :key="medicine.id">
-                          <li>{{ medicine.medicationName }}</li>
-                      </template>
-                  </ul>
-              </td>
-            </tr>
-          </router-link>
-      </tbody>
+      <router-link v-else v-for="(patient, index) in patients" :key="patient.id"
+        custom
+        v-slot="{ navigate }"
+        :to="{
+          name: 'SinglePatientView',
+          params: {
+            id: patient.id,
+            patient: JSON.stringify(patient),
+            medicines: JSON.stringify(getAllPatientMedicines(patient))
+          },
+        }">
+        <tr @click="navigate" @keypress.enter="navigate" role="link">
+          <td>{{index + 1}}.</td>
+          <td>{{patient.name}} {{patient.lastName}}</td>
+          <td>
+              <ul>
+                  <template v-for="medicine in getAllPatientMedicines(patient)" :key="medicine.id">
+                      <li>{{ medicine.medicationName }}</li>
+                  </template>
+              </ul>
+          </td>
+        </tr>
+      </router-link>
+    </tbody>
   </table>
 </template>
 
@@ -103,7 +103,7 @@ tbody tr:nth-child(even){
 tbody tr {
     transition: all .2s linear;
 }
-tbody tr:hover {
+tbody tr:hover:not(.loader) {
     background: rgb(2, 49, 179);
     cursor: pointer;
 }

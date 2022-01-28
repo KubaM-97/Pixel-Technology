@@ -1,5 +1,5 @@
 <template>
-  <img src="../assets/images/loader.gif" alt="loader" />
+  <img src="../assets/images/loader2.gif" alt="loader" />
 </template>
 
 <script>
@@ -15,8 +15,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 img {
-  width: 100%;
+  width: 50%;
 }
 </style>

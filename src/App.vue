@@ -1,6 +1,8 @@
 <template>
   <router-view v-slot="{ Component }">
-    <component :is="Component" />
+     <transition name="fade" mode="out-in">
+      <component :is="Component" />
+    </transition>
   </router-view>
 </template>
 
@@ -35,6 +37,12 @@ body{
   margin: auto;
   width: 65%;
   max-width: 1400px;
+}
+.fade-enter-active, .fade-leave-active{
+  transition: opacity .5s ease-out;
+}
+.fade-enter, .fade-leave-to{
+  opacity: 0;
 }
 @media (max-width: 1199px) {
   #app {
