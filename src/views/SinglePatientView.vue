@@ -114,7 +114,7 @@ export default {
   width: 60%;
 }
 .card{
-  width: 90%;
+  width: 91%;
   margin: auto;
 }
 .loader {
