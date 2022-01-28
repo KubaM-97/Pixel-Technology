@@ -79,32 +79,34 @@ export default {
 <style scoped>
 table {
     margin-top: 50px;
-    width: 60%;
+    width: 100%;
     max-width: 1400px;
-    color: rgba(192, 192, 192, 0.815);
+    color: rgba(216, 207, 207, 0.994);
     border-collapse: collapse;
+    border: 2px solid black;
 }
 thead {
-    background: rgb(0, 60, 255);
+    background: linear-gradient(311deg, rgba(2,0,36,1) 0%, rgba(111,111,204,1) 17%, rgba(0,212,255,1) 100%);
     font-weight: 700;
 }
 thead td {
     font-size: 1.4rem;
+    padding: 20px 0;
 }
 tbody {
     color: rgb(228, 227, 227)
 }
 tbody tr:nth-child(odd){
-    background: #418efa;
+    background: rgb(46, 145, 236);
 }
 tbody tr:nth-child(even){
-    background: #2b7bec;
+    background: rgb(68, 155, 236);
 }
 tbody tr {
     transition: all .2s linear;
 }
 tbody tr:hover:not(.loader) {
-    background: rgb(2, 49, 179);
+    background: rgba(11, 96, 207, 0.8);
     cursor: pointer;
 }
 td {

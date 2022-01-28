@@ -41,7 +41,7 @@ export default {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  width: 100%;
+  width: 80%;
   max-width: 1400px;
 }
 @media (max-width: 768px){
