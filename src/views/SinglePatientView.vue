@@ -43,7 +43,9 @@
 import { computed, ref, } from 'vue';
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex';
-import Loader from '../components/Loader.vue';
+import Loader from '@/components/Loader.vue';
+import fetchingDataMixin from "@/components/mixins/fetchingDataMixin.js"
+
 export default {
     name: 'SinglePatientView',
     components: {
@@ -71,32 +73,11 @@ export default {
       }
 
       async function fetchData() {
-        await fetchPatients();
-        await fetchMedicines();
+        isLoading.value = true;
+        await fetchingDataMixin().fetchData();
+        isLoading.value = false;
         patient.value = allPatients.value.find( patient => patient.id === route.params.id)
         patientMedicines.value = allMedicines.value.filter( medicine => medicine.patientIds.includes(patient.value.id))
-      }
-
-      async function fetchPatients() {
-        try {
-          isLoading.value = true;
-          await store.dispatch('fetchPatients')
-        } catch (err) {
-          console.error(err);
-        } finally {
-          isLoading.value = false;
-        }
-      }
-
-      async function fetchMedicines() {
-        try {
-          isLoading.value = true;
-          await store.dispatch('fetchMedicines')
-        } catch (err) {
-          console.error(err);
-        } finally {
-          isLoading.value = false;
-        }
       }
 
       function translateGender(gender) {

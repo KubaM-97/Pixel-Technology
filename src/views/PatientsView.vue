@@ -1,64 +1,35 @@
 <template>
-  <PatientsTable :patients="patients" :medicines="medicines" :isLoading="isLoading" />
+  <div class='patientView'>
+    <FiltersPanel />
+    <PatientsTable :isLoading="isLoading" />
+  </div>
 </template>
 
 <script>
 
+import FiltersPanel from '@/components/filters/FiltersPanel';
 import PatientsTable from '@/components/PatientsTable';
+import fetchingDataMixin from "@/components/mixins/fetchingDataMixin.js"
 
-import { ref, onMounted } from 'vue';
-
-import axios from 'axios'
+import { onMounted, ref } from 'vue';
 
 export default {
   name: 'PatientsView',
   components: {
+    FiltersPanel,
     PatientsTable,
   },
   setup() {
-    const patients = ref([]);
-    const medicines = ref([]);
 
     const isLoading = ref(false);
-
+      
     onMounted(async () => {
-      await fetchData();
+      isLoading.value = true
+      await fetchingDataMixin().fetchData();
+      isLoading.value = false
     });
 
-    async function fetchData() {
-      await fetchPatients();
-      await fetchMedicines();
-    }
-
-    async function fetchPatients() {
-      try {
-        isLoading.value = true;
-        await axios
-          .get("https://cerber.pixel.com.pl/api/patients")
-          .then((res) => (patients.value = res.data));
-      } catch (err) {
-        console.error(err);
-      } finally {
-        isLoading.value = false;
-      }
-    }
-
-    async function fetchMedicines() {
-      try {
-        isLoading.value = true;
-        await axios
-          .get("https://cerber.pixel.com.pl/api/medicine")
-          .then((res) => (medicines.value = res.data));
-      } catch (err) {
-        console.error(err);
-      } finally {
-        isLoading.value = false;
-      }
-    }
-
     return {
-      patients,
-      medicines,
       isLoading,
     };
   },
